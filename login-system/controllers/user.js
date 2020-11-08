@@ -29,7 +29,7 @@ router.post('/create', (req, res)=>{
 		//res.render('home/userlist',{users: newlist});
 		//req.session.studentlist = newlist;
 		
-		if(req.body.username != "" || req.body.email !="" ||req.body.password !="")//|| req.body.email=req.body.password)
+		if(req.body.username != "" || req.body.email !="" || req.body.password !="")//|| req.body.email=req.body.password)
 		{
 			
 			var student = [req.body.username,req.body.email,req.body.password];
@@ -78,8 +78,10 @@ router.post('/edit', (req, res)=>{
 router.get('/delete', (req, res)=>{
 	
 	if(req.cookies['uname'] != ""){
-		var user = {username: 'noman', password: '123', email: 'email@gmail.com'};
-		res.render('user/delete', user);
+		var i = req.query.stdno;
+		res.render('user/delete',{name:req.session.studentlist[i][0],
+								password:req.session.studentlist[i][2],
+								email:req.session.studentlist[i][1]});
 	}else{
 		res.redirect('/login');
 	}
@@ -88,7 +90,10 @@ router.get('/delete', (req, res)=>{
 router.post('/delete', (req, res)=>{
 	
 	if(req.cookies['uname'] != ""){
-		res.send('done!');
+		var i = req.query.stdno;
+		req.session.studentlist.splice(i,1);
+		res.redirect('/home/userlist');
+		//res.send('done!');
 	}else{
 		res.redirect('/login');
 	}
