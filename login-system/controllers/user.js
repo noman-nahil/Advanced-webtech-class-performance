@@ -34,7 +34,7 @@ router.post('/create', (req, res)=>{
 			
 			var student = [req.body.username,req.body.email,req.body.password];
 			req.session.studentlist.push(student);//.concat(this.student);
-			console.log(req.session.studentlist);
+			//console.log(req.session.studentlist);
 			//res.send('Username Required');
 			res.redirect("/home/userlist");
 		}
@@ -50,7 +50,13 @@ router.post('/create', (req, res)=>{
 router.get('/edit', (req, res)=>{
 	
 	if(req.cookies['uname'] != ""){
-		res.render('user/edit');
+		var i= req.query.stdno;
+
+		//console.log(req.query.noOfstudent);
+		//console.log(req.session.studentlist[i]);
+		res.render('user/edit',{name:req.session.studentlist[i][0],
+								password:req.session.studentlist[i][2],
+								email:req.session.studentlist[i][1]});
 	}else{
 		res.redirect('/login');
 	}
@@ -59,7 +65,11 @@ router.get('/edit', (req, res)=>{
 router.post('/edit', (req, res)=>{
 	
 	if(req.cookies['uname'] != ""){
-		res.send('updated');
+		var i= req.query.stdno;
+		req.session.studentlist[i]=[req.body.username,req.body.email,req.body.password];
+		//alert('update successfully')
+		res.redirect('/home/userlist');
+		//res.send('updated');
 	}else{
 		res.redirect('/login');
 	}

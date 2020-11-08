@@ -25,7 +25,7 @@ router.get('/userlist', (req, res)=>{
 			['2', 'pqr', 'pqr@gmail.com', '1243'],
 			['3', 'xyz', 'xyz@gmail.com', '1243']
 		];*/
-		console.log(req.session.studentlist);	
+		//cconsole.log(req.session.studentlist);	
 
 		//students.push(li);
 		/*var userinfo = [];
